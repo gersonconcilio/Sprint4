@@ -65,14 +65,14 @@ public class AFD {
             String [][] transicoes = new String[][]{
                     {"a", "0", "b"},
                     {"a", "1", "a"},
-                    {"b", "1", "a"},
                     {"b", "0", "a"},
+                    {"b", "1", "b"},
             };
 
             AFD meuAFD = new AFD(estados, alfabeto, estadoInicial, estadosFinais, transicoes);
 
             // PALAVRA PARA TESTAR O AUTOMATO
-            String palavra = "000001";
+            String palavra = "0001";
 
             List<String[]> configuracoes = new ArrayList<String[]>();
 
@@ -118,10 +118,10 @@ public class AFD {
 
            // MOSTRA SE FOI RECONHECIDA A PALAVRA OU NAO
            if(this.estadosFinais.contains(estadoAtual)){
-            System.out.println("Palavra reconhecida pelo automato!!!");
+            System.out.println("Palavra reconhecida pelo autômato!!!");
             return true;
           }else{
-               System.out.println("Palavra rejeitada pelo automato!!!");
+               System.out.println("Palavra rejeitada pelo autômato!!!");
                return false;
          }
 
