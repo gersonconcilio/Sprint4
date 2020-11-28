@@ -50,29 +50,42 @@ public class AFD {
 */
 
             // ALFABETO
-            String alfabeto = "01";
+            String alfabeto = "ab";
 
             // ESTADOS
-            String estados = "a,b";
+            String estados = "q1,q2,q3,q4,q5,q6,q7,q8";
 
             // ESTADO INICIAL EX: A
-            String estadoInicial = "a";
+            String estadoInicial = "q1";
 
             // ESTADO FINAL PODE SER MAIS DE UM EX: BC
-            String estadosFinais = "a";
+            String estadosFinais = "q1,q3,q7";
 
-            // FUNÇOES DE TRANSIÇÃO DE ESTADOS
+            // FUNÇÕES DE TRANSIÇÃO DE ESTADOS
             String [][] transicoes = new String[][]{
-                    {"a", "0", "b"},
-                    {"a", "1", "a"},
-                    {"b", "0", "a"},
-                    {"b", "1", "b"},
+                    {"q1", "a", "q2"},
+                    {"q1", "b", "q4"},
+                    {"q2", "a", "q5"},
+                    {"q2", "b", "q3"},
+                    {"q3", "a", "q2"},
+                    {"q3", "b", "q6"},
+                    {"q4", "a", "q1"},
+                    {"q4", "b", "q5"},
+                    {"q5", "a", "q5"},
+                    {"q5", "b", "q5"},
+                    {"q6", "a", "q3"},
+                    {"q6", "b", "q5"},
+                    {"q7", "a", "q6"},
+                    {"q7", "b", "q8"},
+                    {"q8", "a", "q7"},
+                    {"q8", "b", "q3"},
             };
 
+            // CRIA UM AFD COM OS DADOS INSERIDOS
             AFD meuAFD = new AFD(estados, alfabeto, estadoInicial, estadosFinais, transicoes);
 
             // PALAVRA PARA TESTAR O AUTOMATO
-            String palavra = "0001";
+            String palavra = "baababbaab";
 
             List<String[]> configuracoes = new ArrayList<String[]>();
 
@@ -87,32 +100,31 @@ public class AFD {
         System.out.println("----------TRANSIÇÕES----------");
 
         // LOGICA APLICADA PARA FAZER A TRANSIÇÃO DE UM ESTADO PARA O OUTRO
-        while (palavraList.size() > 0){
+
             for (int i = 0; i < this.transicoes.length; ++i) {
                 if (this.transicoes[i][1].equals(palavraList.get(0))) {
                     if (this.transicoes[i][0].equals(estadoAtual)) {
-                        String estadoAnterior = estadoAtual;
-                        estadoAtual = this.transicoes[i][2];
+                        System.out.print("(" + estadoAtual + ", ");//Print para mostrar o estado onde estava
+                        for (int j = 0; j < palavraList.size(); j++) {
+                            System.out.print(palavraList.get(j));//Print para mostrar a palavra consumida
+                        }
+                        System.out.println(")");
 
                         palavraList.remove(0);
-
-                        System.out.print("(" + estadoAnterior + " ,");//Print para mostrar o estado onde estava
+                        estadoAtual = this.transicoes[i][2];
 
                         if (palavraList.isEmpty()) {
-                            System.out.println("" + "&)");
+                            System.out.println("(" + estadoAtual + ", &)");
                             break;
                         }
 
-                        for (int j = 0; j < palavraList.size(); j++) {
-                            System.out.print("" + palavraList.get(j));//Print para mostrar a palavra consumida
-                        }
-                        System.out.println(")");
+                        i = -1;
                     }
                 }
             }
-        }
+
            System.out.println("----------TESTE INICIO FINALIZADO----------");
-           System.out.println("Automato finalizado!!!");
+           System.out.println("Autômato finalizado!!!");
            System.out.println("Estado final: " + estadoAtual);
            System.out.println("--------------------");
 
