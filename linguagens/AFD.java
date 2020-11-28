@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class AFD {
@@ -89,6 +90,23 @@ public class AFD {
             ArrayList<ArrayList<String>> configuracoes = new ArrayList<ArrayList<String>>();
 
             meuAFD.Reconhecer(palavra,configuracoes);
+
+
+        System.out.println("--------------------");
+        System.out.println("--------------------");
+        System.out.println("--------------------");
+        System.out.println("--------------------");
+        System.out.println("--------------------");
+        System.out.println("--------------------");
+
+        meuAFD.minimizar();
+
+        System.out.println("--------------------");
+        System.out.println("--------------------");
+        System.out.println("--------------------");
+        System.out.println("--------------------");
+        System.out.println("--------------------");
+        System.out.println("--------------------");
     }
     
     boolean Reconhecer(String palavra, ArrayList<ArrayList<String>> configuracoes) {//Função onde será realizado as transições, e retorna true: reconhecida e false: não reconhecida
@@ -125,7 +143,7 @@ public class AFD {
            System.out.println("----------TESTE INICIO FINALIZADO----------");
            System.out.println("Autômato finalizado!!!");
            System.out.println("Estado final: " + estadoAtual);
-           System.out.println("--------------------");
+        System.out.println("--------------------");
 
            // MOSTRA SE FOI RECONHECIDA A PALAVRA OU NAO
            if(this.estadosFinais.contains(estadoAtual)){
@@ -144,9 +162,28 @@ public class AFD {
         }
     }
 
-/*
-    public AFD minimizar(AFD automato){
+    private void estadosAtingiveis(String estado, ArrayList<String> estados) {
+        for (int i = 0; i < this.transicoes.length; i++) {
+            if (estado.equals(this.transicoes[i][0]) && !estados.contains(this.transicoes[i][2])) {
+                estados.add(this.transicoes[i][2]);
+                Collections.sort(estados);
+                estadosAtingiveis(this.transicoes[i][2], estados);
+            }
+        }
+    }
+
+    public void minimizar(){
+        ArrayList<String> estados = new ArrayList<String>();
+
+        // Adiciona todos os estados atingíveis
+        estados.add(this.estadoInicial);
+
+        estadosAtingiveis(estadoInicial, estados);
+
+        for(int i = 0; i < estados.size(); i++){
+            System.out.println(estados.get(i));
+        }
+
 
     }
-    */
 }
