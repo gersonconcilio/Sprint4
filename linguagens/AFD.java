@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class AFD {
@@ -87,36 +86,36 @@ public class AFD {
             // PALAVRA PARA TESTAR O AUTOMATO
             String palavra = "baababbaab";
 
-            List<String[]> configuracoes = new ArrayList<String[]>();
+            ArrayList<ArrayList<String>> configuracoes = new ArrayList<ArrayList<String>>();
 
             meuAFD.Reconhecer(palavra,configuracoes);
     }
     
-    boolean Reconhecer(String palavra, List<String[]> matriz) {//Função onde será realizado as transições, e retorna true: reconhecida e false: não reconhecida
-        List<String> palavraList = new ArrayList<>(Arrays.asList(palavra.split("")));
+    boolean Reconhecer(String palavra, ArrayList<ArrayList<String>> configuracoes) {//Função onde será realizado as transições, e retorna true: reconhecida e false: não reconhecida
+        String palavraAux = palavra;
         String estadoAtual = this.estadoInicial;
 
         // VERIFICA O TAMANHO DA PALAVRA PARA SER TESTADA
         System.out.println("----------TRANSIÇÕES----------");
 
+        configuracoes.add( new ArrayList<String>(Arrays.asList(new String[]{estadoAtual, palavraAux})));
+
         // LOGICA APLICADA PARA FAZER A TRANSIÇÃO DE UM ESTADO PARA O OUTRO
-
             for (int i = 0; i < this.transicoes.length; ++i) {
-                if (this.transicoes[i][1].equals(palavraList.get(0))) {
+                if (this.transicoes[i][1].equals(palavraAux.substring(0, 1))) {
                     if (this.transicoes[i][0].equals(estadoAtual)) {
-                        System.out.print("(" + estadoAtual + ", ");//Print para mostrar o estado onde estava
-                        for (int j = 0; j < palavraList.size(); j++) {
-                            System.out.print(palavraList.get(j));//Print para mostrar a palavra consumida
-                        }
-                        System.out.println(")");
+                        System.out.println("(" + estadoAtual + ", " + palavraAux + ")");
 
-                        palavraList.remove(0);
+                        palavraAux = palavraAux.substring(1);
                         estadoAtual = this.transicoes[i][2];
 
-                        if (palavraList.isEmpty()) {
-                            System.out.println("(" + estadoAtual + ", &)");
+                        if (palavraAux.length() == 0) {
+                            configuracoes.add( new ArrayList<String>(Arrays.asList(new String[]{estadoAtual, "ε"})));
+                            System.out.println("(" + estadoAtual + ", ε)");
                             break;
                         }
+
+                        configuracoes.add( new ArrayList<String>(Arrays.asList(new String[]{estadoAtual, palavraAux})));
 
                         i = -1;
                     }
@@ -138,6 +137,13 @@ public class AFD {
          }
 
     }
+
+    public void imprimeConfig(ArrayList<ArrayList<String>> configuracoes){
+        for(int i = 0; i < configuracoes.size(); i++){
+            System.out.println("(" + configuracoes.get(i).get(0) + ", " + configuracoes.get(i).get(1) + ")");
+        }
+    }
+
 /*
     public AFD minimizar(AFD automato){
 
