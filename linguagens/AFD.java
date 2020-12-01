@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 
 public class AFD {
     private ArrayList<String> estados;
@@ -87,36 +84,29 @@ public class AFD {
             // PALAVRA PARA TESTAR O AUTOMATO
             String palavra = "baababbaab";
 
-            ArrayList<ArrayList<String>> configuracoes = new ArrayList<ArrayList<String>>();
+            List<String[]> configuracoes = new ArrayList<String[]>();
 
             meuAFD.Reconhecer(palavra,configuracoes);
 
 
         System.out.println("--------------------");
         System.out.println("--------------------");
-        System.out.println("--------------------");
-        System.out.println("--------------------");
-        System.out.println("--------------------");
-        System.out.println("--------------------");
-
+        System.out.println("Minimizar():");
         meuAFD.minimizar();
-
         System.out.println("--------------------");
         System.out.println("--------------------");
-        System.out.println("--------------------");
-        System.out.println("--------------------");
-        System.out.println("--------------------");
-        System.out.println("--------------------");
+        System.out.println("imprimeConfig():");
+        meuAFD.imprimeConfig(configuracoes);
     }
     
-    boolean Reconhecer(String palavra, ArrayList<ArrayList<String>> configuracoes) {//Função onde será realizado as transições, e retorna true: reconhecida e false: não reconhecida
+    boolean Reconhecer(String palavra, List<String[]> configuracoes) {//Função onde será realizado as transições, e retorna true: reconhecida e false: não reconhecida
         String palavraAux = palavra;
         String estadoAtual = this.estadoInicial;
 
         // VERIFICA O TAMANHO DA PALAVRA PARA SER TESTADA
         System.out.println("----------TRANSIÇÕES----------");
 
-        configuracoes.add( new ArrayList<String>(Arrays.asList(new String[]{estadoAtual, palavraAux})));
+        configuracoes.add(new String[]{estadoAtual, palavraAux});
 
         // LOGICA APLICADA PARA FAZER A TRANSIÇÃO DE UM ESTADO PARA O OUTRO
             for (int i = 0; i < this.transicoes.length; ++i) {
@@ -128,12 +118,12 @@ public class AFD {
                         estadoAtual = this.transicoes[i][2];
 
                         if (palavraAux.length() == 0) {
-                            configuracoes.add( new ArrayList<String>(Arrays.asList(new String[]{estadoAtual, "ε"})));
+                            configuracoes.add(new String[]{estadoAtual, "ε"});
                             System.out.println("(" + estadoAtual + ", ε)");
                             break;
                         }
 
-                        configuracoes.add( new ArrayList<String>(Arrays.asList(new String[]{estadoAtual, palavraAux})));
+                        configuracoes.add(new String[]{estadoAtual, palavraAux});
 
                         i = -1;
                     }
@@ -156,9 +146,9 @@ public class AFD {
 
     }
 
-    public void imprimeConfig(ArrayList<ArrayList<String>> configuracoes){
+    public void imprimeConfig(List<String[]> configuracoes){
         for(int i = 0; i < configuracoes.size(); i++){
-            System.out.println("(" + configuracoes.get(i).get(0) + ", " + configuracoes.get(i).get(1) + ")");
+            System.out.println("(" + configuracoes.get(i)[0] + ", " + configuracoes.get(i)[1] + ")");
         }
     }
 
