@@ -130,12 +130,6 @@ public class AFD {
         // Adiciona todos os estados atingíveis
         estadosAtingiveis(this.estadoInicial, novoEstados);
 
-        // print para debug
-        System.out.println("Estados atingiveis:");
-        for(int i = 0; i < novoEstados.size(); i++){
-            System.out.print(novoEstados.get(i) + ", ");
-        }
-
         // Cria tabela relacionando os estados
         Map<List<String>, Integer> tabelaRelacoes = new HashMap<List<String>, Integer>();
         for(int i = 0; i < novoEstados.size(); i++) {
@@ -150,15 +144,6 @@ public class AFD {
                 }
 
             }
-        }
-
-        // print para debug
-        System.out.println("\nTabela de relação:");
-        for (Map.Entry<List<String>, Integer> entry : tabelaRelacoes.entrySet()) {
-            List<String> parEstados = entry.getKey();
-            int valor = entry.getValue();
-            System.out.println("["+ parEstados.get(0) +"]"+"["+ parEstados.get(1) +"]"+"["+valor+"]");
-
         }
 
         // Cria lista para posterior analise de estados
@@ -207,26 +192,6 @@ public class AFD {
                 }
 
             }
-        }
-
-        // print para debug
-        System.out.println("\nTabela de relação:");
-        for (Map.Entry<List<String>, Integer> entry : tabelaRelacoes.entrySet()) {
-            List<String> parEstados = entry.getKey();
-            int valor = entry.getValue();
-            System.out.println("["+ parEstados.get(0) +"]"+"["+ parEstados.get(1) +"]"+"["+valor+"]");
-        }
-
-        // print para debug
-        System.out.println("\nlistaAnalise:");
-        for (Map.Entry<List<String>, ArrayList<List<String>>> entry : listaAnalise.entrySet()) {
-            List<String> parEstados = entry.getKey();
-            ArrayList<List<String>> listaEstados = entry.getValue();
-            System.out.print("["+ parEstados.get(0) +"]"+"["+ parEstados.get(1) +"] ->");
-            for(List<String> proxEstados : listaEstados) {
-                System.out.print("["+ proxEstados.get(0) +"]"+"["+ proxEstados.get(1) +"] ->");
-            }
-            System.out.println();
         }
 
         String novoEstadoInicial = this.estadoInicial;
@@ -302,29 +267,14 @@ public class AFD {
             }
         }
 
-            // print para debug
-            System.out.println("\nNovos Estados:");
-            for (String estado : novoEstados) {
-                System.out.print(estado + ", ");
-            }
+        // Cria a matriz de transições a partir da lista auxiliar de transições
+        String[][] novoTransicoes = new String[auxNovoTransicoes.size()][3];
+        for (int i = 0; i < auxNovoTransicoes.size(); i++) {
+            novoTransicoes[i] = auxNovoTransicoes.get(i);
+        }
 
-            // print para debug
-            System.out.println("\n\nNovas transições:");
-            for (String[] transicao : auxNovoTransicoes) {
-                for (String x : transicao) {
-                    System.out.print(x + ", ");
-                }
-                System.out.println();
-            }
-
-            // Cria a matriz de transições a partir da lista auxiliar de transições
-            String[][] novoTransicoes = new String[auxNovoTransicoes.size()][3];
-            for (int i = 0; i < auxNovoTransicoes.size(); i++) {
-                novoTransicoes[i] = auxNovoTransicoes.get(i);
-            }
-
-            // Retorna o novo Autômato minimizado
-            return new AFD(novoEstados, this.alfabeto, novoEstadoInicial, novoEstadosFinais, novoTransicoes);
+        // Retorna o novo Autômato minimizado
+        return new AFD(novoEstados, this.alfabeto, novoEstadoInicial, novoEstadosFinais, novoTransicoes);
         }
 
     /** Retorna o próximo estado de uma transição
