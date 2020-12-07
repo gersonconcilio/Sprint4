@@ -41,8 +41,9 @@ public class testAFD {
         AFD.Configuracoes configuracoes = new AFD.Configuracoes();
         boolean reconhecido = meuAFD.Reconhecer(palavra,configuracoes);
 
+        System.out.println("--------------------");
         configuracoes.imprimir();
-
+        System.out.println("--------------------");
         if(reconhecido){
             System.out.println("A palavra " + palavra + " foi reconhecida pelo autômato.");
         } else {
@@ -52,6 +53,19 @@ public class testAFD {
         System.out.println("--------------------");
         System.out.println("--------------------");
         System.out.println("minimizar():");
-        meuAFD.minimizar();
+        AFD meuAFDMin = meuAFD.minimizar();
+
+        AFD.Configuracoes configuracoes2 = new AFD.Configuracoes();
+        boolean reconhecido2 = meuAFDMin.Reconhecer(palavra,configuracoes2);
+
+        System.out.println("--------------------");
+        configuracoes2.imprimir();
+        System.out.println("--------------------");
+        if(reconhecido2){
+            System.out.println("A palavra " + palavra + " foi reconhecida pelo autômato.");
+        } else {
+            System.out.println("A palavra " + palavra + " não foi reconhecida pelo autômato.");
+        }
+
     }
 }
