@@ -38,10 +38,14 @@ public class testAFD {
         // PALAVRA PARA TESTAR O AUTOMATO
         String palavra = "baababbaab";
 
+        // CRIA OBJETO QUE RECEBE AS CONFIGURAÇÕES
         AFD.Configuracoes configuracoes = new AFD.Configuracoes();
+
+        // CHAMA FUNÇÃO QUE RECONHECE A PALAVRA
         boolean reconhecido = meuAFD.Reconhecer(palavra,configuracoes);
 
         System.out.println("--------------------");
+        // IMPRIME AS CONFIGURAÇÕES
         configuracoes.imprimir();
         System.out.println("--------------------");
         if(reconhecido){
@@ -53,12 +57,15 @@ public class testAFD {
         System.out.println("--------------------");
         System.out.println("--------------------");
         System.out.println("minimizar():");
+        // CRIA NOVO AUTÔMATO QUE RECEBE O AUTÔMATO ANTERIOR MINIMIZADO
         AFD meuAFDMin = meuAFD.minimizar();
 
         AFD.Configuracoes configuracoes2 = new AFD.Configuracoes();
         boolean reconhecido2 = meuAFDMin.Reconhecer(palavra,configuracoes2);
 
         System.out.println("--------------------");
+        System.out.println("--------------------");
+        System.out.println("Configurações do autômato minimizado: ");
         configuracoes2.imprimir();
         System.out.println("--------------------");
         if(reconhecido2){
