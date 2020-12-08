@@ -57,6 +57,7 @@ public class testAFD {
         System.out.println("--------------------");
         System.out.println("--------------------");
         System.out.println("minimizar():");
+
         // CRIA NOVO AUTÔMATO QUE RECEBE O AUTÔMATO ANTERIOR MINIMIZADO
         AFD meuAFDMin = meuAFD.minimizar();
 
@@ -72,6 +73,28 @@ public class testAFD {
             System.out.println("A palavra " + palavra + " foi reconhecida pelo autômato.");
         } else {
             System.out.println("A palavra " + palavra + " não foi reconhecida pelo autômato.");
+        }
+
+        AFD afdPrint = meuAFD;
+        System.out.println("--------------------");
+        System.out.println("Autômato:");
+        System.out.println(" Estados: " + afdPrint.estados);
+        System.out.println(" Estado Inicial: " + afdPrint.estadoInicial);
+        System.out.println(" Estados Finais: " + afdPrint.estadosFinais);
+        System.out.println(" Transições: ");
+        for(String[] trans : afdPrint.transicoes) {
+            System.out.println("  ("+ trans[0] + ", " + trans[1] + ", " + trans[2] + ")");
+        }
+
+        afdPrint = meuAFDMin;
+        System.out.println("--------------------");
+        System.out.println("Autômato Minimizado:");
+        System.out.println(" Estados: " + afdPrint.estados);
+        System.out.println(" Estado Inicial: " + afdPrint.estadoInicial);
+        System.out.println(" Estados Finais: " + afdPrint.estadosFinais);
+        System.out.println(" Transições: ");
+        for(String[] trans : afdPrint.transicoes) {
+            System.out.println("  ("+ trans[0] + ", " + trans[1] + ", " + trans[2] + ")");
         }
 
     }
