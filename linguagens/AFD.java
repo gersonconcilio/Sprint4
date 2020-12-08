@@ -246,7 +246,7 @@ public class AFD {
         for(String estado : novoEstados) {
             for(String[] transicao : this.transicoes) {
                 if(transicao[0].equals(estado)){
-                    auxNovoTransicoes.add(transicao);
+                    auxNovoTransicoes.add(transicao.clone());
                 }
             }
         }
